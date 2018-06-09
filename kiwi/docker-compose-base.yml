@@ -1,0 +1,32 @@
+version: '2'
+
+services:
+    device-camera-rpicamv2:
+        image: chalmersrevere/opendlv-device-camera-rpicamv2-armhf:v0.0.1
+        network_mode: "host"
+        volumes:
+          - "/dev/shm:/dev/shm"
+        privileged: true
+        ulimits:
+          memlock:
+            soft: 4000000
+            hard: 4000000
+        command: "opendlv-device-camera-rpicamv2 --cid=112 --name=cam0"
+    
+    ui-videostream:
+        image: chalmersrevere/opendlv-ui-videostream-armhf:v0.0.1
+        restart: always
+        network_mode: "host"
+        volumes:
+          - "/dev/shm:/dev/shm"
+        privileged: true
+        ulimits:
+          memlock:
+            soft: 4000000
+            hard: 4000000
+        command: "opendlv-ui-videostream --cid=112 --freq=5 --name=cam0 --width=1280 --height=960 --bpp=24 --scaled-width=256 --scaled-height=192"
+         
+    proxy:
+        image: chalmersrevere/opendlv-proxy-armhf:v0.0.1
+        network_mode: "host"
+        command: "opendlv-proxy --cid=112 --target-ip=192.168.1.2 --target-port=${TARGET_PORT} --port=10000"
