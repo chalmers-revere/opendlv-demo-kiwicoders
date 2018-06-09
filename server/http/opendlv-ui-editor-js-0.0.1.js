@@ -49,7 +49,7 @@ function onStreamOpen(ws, lc) {
     return xmlHttp.responseText;
   }
 
-  var odvd = getResourceFrom("opendlv-standard-message-set-v0.9.4.odvd");
+  var odvd = getResourceFrom("opendlv-standard-message-set-v0.9.5.odvd");
 
   console.log("Connected to stream.");
   console.log("Loaded " + lc.setMessageSpecification(odvd) + " messages from specification.");
