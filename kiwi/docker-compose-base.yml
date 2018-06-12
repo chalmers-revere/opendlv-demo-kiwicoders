@@ -1,18 +1,6 @@
 version: '2'
 
-services:
-    device-camera-rpicamv2:
-        image: chalmersrevere/opendlv-device-camera-rpicamv2-armhf:v0.0.1
-        network_mode: "host"
-        volumes:
-          - "/dev/shm:/dev/shm"
-        privileged: true
-        ulimits:
-          memlock:
-            soft: 4000000
-            hard: 4000000
-        command: "opendlv-device-camera-rpicamv2 --cid=112 --name=cam0"
-    
+services:   
     ui-videostream:
         image: chalmersrevere/opendlv-ui-videostream-armhf:v0.0.1
         restart: always
