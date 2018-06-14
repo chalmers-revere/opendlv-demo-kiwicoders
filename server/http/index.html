@@ -114,218 +114,238 @@ actuation.steering = 0;
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Välkommen!</h4>
+            <h4 class="modal-title"></h4>
           </div>
           <div class="modal-body">
 
-            <p>
-              Du är nu uppkopplad mot OpenDLV, en öppen mjukvara som kan köra bilar,
-              lastbilar och båtar bland annat. Mjukvaran är gemensamt skapad av 
-              Chalmersforskare och kraven på noggrannhet och tillförlitlighet är höga.
-            </p>
 
-            <p>
-              I det här exemplet körs mjukvaran på vår egendesignade robotmodell 
-              Kiwi, som är möjlig att skriva ut på egen 3D-skrivare.
-            </p> 
 
-            <p>
-              Nu erbjuder vi dig den unika möjligheten att prova på att programmera 
-              Kiwi för att ta sig igenom en utmanande hinderbana. Det bästa beteendet 
-              som programmerats under Volvo Ocean Race kommer att belönas med ett fint 
-              pris! Fråga gärna om du behöver tips för att komma igång.
-            <p>
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#home">Hem</a></li>
+              <li><a data-toggle="tab" href="#goal">Syfte</a></li>
+              <li><a data-toggle="tab" href="#styrning">Styrning</a></li>
+              <li><a data-toggle="tab" href="#styrning">Code</a></li>
+              <li><a data-toggle="tab" href="#styrning">Sensors</a></li>
+              <li><a data-toggle="tab" href="#styrning">Control</a></li>
+              <li><a data-toggle="tab" href="#styrning">Memory</a></li>
+            </ul>
 
-            <p>
-              Och du, det går även att koppla upp sig till montern via nätet, så du 
-              behöver inte klura fram din kod här på plats.
-            </p>
+            <div class="tab-content">
+              <div id="home" class="tab-pane fade in active">
+                <h1>Välkommen!</h1>
 
-            <h2>Syfte</h2>
+                <p>
+                  Du är nu uppkopplad mot OpenDLV, en öppen mjukvara som kan köra bilar,
+                  lastbilar och båtar bland annat. Mjukvaran är gemensamt skapad av 
+                  Chalmersforskare och kraven på noggrannhet och tillförlitlighet är höga.
+                </p>
 
-            <p>
-              Det är inte heller en slump att vi låter dig undersöka vår spännande 
-              plattform. Forskningen har visat att kännedom och ökad kunskap kring 
-              öppen källkod minskar risken för buggar i kod avsevärt, och för 
-              säkerhetskritiska system som självkörande fordon så kommer detta 
-              såklart att leda till förbättrad säkerhet och räddade liv!
-            </p>
+                <p>
+                  I det här exemplet körs mjukvaran på vår egendesignade robotmodell 
+                  Kiwi, som är möjlig att skriva ut på egen 3D-skrivare.
+                </p> 
 
-            <p>
-             Det är helt enkelt viktigt att många har möjlighet att granska och vara 
-             med och vidareutveckla programkod. I det här fallet visar vi något 
-             relativt enkelt, men det viktiga att komma ihåg är att precis samma 
-             kod kan användas för forskningen kring Chalmers stora bilar och 
-             lastbilar, och varje rad kod finns tillgängligt för allmänheten.
-           </p>
+                <p>
+                  Nu erbjuder vi dig den unika möjligheten att prova på att programmera 
+                  Kiwi för att ta sig igenom en utmanande hinderbana. Det bästa beteendet 
+                  som programmerats under Volvo Ocean Race kommer att belönas med ett fint 
+                  pris! Fråga gärna om du behöver tips för att komma igång.
+                <p>
 
-           <h2>Grundläggande kodning</h2>
+                <p>
+                  Och du, det går även att koppla upp sig till montern via nätet, så du 
+                  behöver inte klura fram din kod här på plats.
+                </p>
+              </div>
+              <div id="goal" class="tab-pane fade">
+                <h2>Syfte</h2>
 
-           <p>
-             Koden som skrivs för Kiwi i det här fallet är i språket JavaScript 
-             som är ett standardspråk för webben. Språket innehåller många avancerade 
-             funktioner, men i det här fallet räcker det oftast med några få delar.
-           </p>
+                <p>
+                  Det är inte heller en slump att vi låter dig undersöka vår spännande 
+                  plattform. Forskningen har visat att kännedom och ökad kunskap kring 
+                  öppen källkod minskar risken för buggar i kod avsevärt, och för 
+                  säkerhetskritiska system som självkörande fordon så kommer detta 
+                  såklart att leda till förbättrad säkerhet och räddade liv!
+                </p>
 
-           <h3>Variabler och konstanter</h3>
+                <p>
+                  Det är helt enkelt viktigt att många har möjlighet att granska och vara 
+                  med och vidareutveckla programkod. I det här fallet visar vi något 
+                  relativt enkelt, men det viktiga att komma ihåg är att precis samma 
+                  kod kan användas för forskningen kring Chalmers stora bilar och 
+                  lastbilar, och varje rad kod finns tillgängligt för allmänheten.
+                </p>
+              </div>
+              <div id="code" class="tab-pane fade">
+                <h2>Grundläggande kodning</h2>
 
-           <p>
-             För att spara data i programmet krävs det att man använder variabler 
-             eller konstanter. Skillnaden är att en variabels värde kan ändras när 
-             som helst, och en konstant går inte att ändra. Följande är ett exempel 
-             på hur dessa kan användas (vad blir 'b' till sist?):
-           </p>
+                <p>
+                  Koden som skrivs för Kiwi i det här fallet är i språket JavaScript 
+                  som är ett standardspråk för webben. Språket innehåller många avancerade 
+                  funktioner, men i det här fallet räcker det oftast med några få delar.
+                </p>
 
-           <pre>
+                <h3>Variabler och konstanter</h3>
+
+                <p>
+                  För att spara data i programmet krävs det att man använder variabler 
+                  eller konstanter. Skillnaden är att en variabels värde kan ändras när 
+                  som helst, och en konstant går inte att ändra. Följande är ett exempel 
+                  på hur dessa kan användas (vad blir 'b' till sist?):
+                </p>
+
+                <pre>
 const a = 10;
 var b = a + 5;
 b = b + 1;
-           </pre>
+                </pre>
 
-           <h3>Villkorssatser</h3>
+                <h3>Villkorssatser</h3>
 
-           <p>
-             Ett annat centralt begrepp är villkorssatsen, eller if-satsen som 
-             den brukar kallas. Den skrivs enligt följande:
-           </p>
+                <p>
+                  Ett annat centralt begrepp är villkorssatsen, eller if-satsen som 
+                  den brukar kallas. Den skrivs enligt följande:
+                </p>
 
-           <pre>
+                <pre>
 var b;
 if (a &lt; 5) {
   b = 1;
 } else {
   b = 2;
 }
-           </pre>
+                </pre>
 
-           <p>
-             I exemplet kontrollerar man om 'a' är mindre än 5, och i så fall 
-             sätts 'b' till 1, annars till 2.
-           </p>
+                <p>
+                  I exemplet kontrollerar man om 'a' är mindre än 5, och i så fall 
+                  sätts 'b' till 1, annars till 2.
+                </p>
 
-           <h3>Snurror</h3>
+                <h3>Snurror</h3>
 
-           <p>
-             Ett ytterligare centralt begrepp i programmering är snurror, eller 
-             for-loopar. Dessa används för att gå igenom listor och annat som man 
-             har i koden, eller om man bara vill utföra samma kommandon flera 
-             gånger. Följande är ett typiskt exempel:
-           </p>
+                <p>
+                  Ett ytterligare centralt begrepp i programmering är snurror, eller 
+                  for-loopar. Dessa används för att gå igenom listor och annat som man 
+                  har i koden, eller om man bara vill utföra samma kommandon flera 
+                  gånger. Följande är ett typiskt exempel:
+                </p>
 
-           <pre>
+               <pre>
 var b = 1;
 for (var i = 0; i &lt; 5; i++) {
   b = b + 2;
 }
-           </pre>
+                </pre>
 
-           <p>
-             I exemplet låter man snurran gå fem gånger, där hjälpvariabeln 'i' 
-             först sätts till 0 för att sedan ökas med ett (i++) i varje varv så 
-             länge som 'i' är mindre än 5. Vad blir 'b'?
-           </p>
+                <p>
+                  I exemplet låter man snurran gå fem gånger, där hjälpvariabeln 'i' 
+                  först sätts till 0 för att sedan ökas med ett (i++) i varje varv så 
+                  länge som 'i' är mindre än 5. Vad blir 'b'?
+                </p>
 
-           <h3>Andra nyttiga funktioner</h3>
+                <h3>Andra nyttiga funktioner</h3>
 
-           <p>
-             Det finns såklart massor av spännande funktioner att undersöka i ett 
-             programmeringsspråk som till exempel JavaScript. Det som nämnts här 
-             är säkert tillräckligt för att kunna få Kiwi att göra spännande konster,
-             men kom också ihåg att internet är fullt av bra guider och exempel på
-             hur man kan utöka sina programmeringsförmågor.
-           </p>
+                <p>
+                  Det finns såklart massor av spännande funktioner att undersöka i ett 
+                  programmeringsspråk som till exempel JavaScript. Det som nämnts här 
+                  är säkert tillräckligt för att kunna få Kiwi att göra spännande konster,
+                  men kom också ihåg att internet är fullt av bra guider och exempel på
+                  hur man kan utöka sina programmeringsförmågor.
+                </p>
+              </div>
+            </div>
+            <div id="sensors" class="tab-pane fade">
+              <h2>Sensorer</h2>
 
+              <p>
+                Kiwi är utrustad med flera sensorer för att kunna läsa av sin omgivning. 
+                Bland annat har den en kamera och fyra avståndssensorer. Med kameran 
+                kan Kiwi tolka färger och mönster, och genom att kombinera detta med 
+                avståndssensorerna får Kiwi möjlighet att navigera säkert.
+              </p>
 
+              <p>
+                Avståndssensorerna ger ifrån sig mätdata i meter, där sensorerna fram 
+                och bak har lång räckvidd och sensorerna på sidorna har kort räckvidd 
+                (ca 30 cm). För att komma åt värdena i koden kan de läsas av enligt följande:
+              </p>
 
-           <h2>Sensorer</h2>
-
-           <p>
-             Kiwi är utrustad med flera sensorer för att kunna läsa av sin omgivning. 
-             Bland annat har den en kamera och fyra avståndssensorer. Med kameran 
-             kan Kiwi tolka färger och mönster, och genom att kombinera detta med 
-             avståndssensorerna får Kiwi möjlighet att navigera säkert.
-           </p>
-
-           <p>
-             Avståndssensorerna ger ifrån sig mätdata i meter, där sensorerna fram 
-             och bak har lång räckvidd och sensorerna på sidorna har kort räckvidd 
-             (ca 30 cm). För att komma åt värdena i koden kan de läsas av enligt följande:
-           </p>
-
-           <pre>
+              <pre>
 const frontSensor = perception.front;
 const rearSensor = perception.rear;
 const leftSensor = perception.left;
 const rightSensor = perception.right;
-           </pre>
+              </pre>
 
-           <p>
-             Kameran ger till skillnad från avståndssensorerna ifrån sig identifierade 
-             ytor och objekt. Exempelvis kan den se linjer på marken, väggar med 
-             olika färger, samt andra Kiwi-bilar. För att komma åt denna data i 
-             koden gör man enligt följande:
-           </p>
+              <p>
+                Kameran ger till skillnad från avståndssensorerna ifrån sig identifierade 
+                ytor och objekt. Exempelvis kan den se linjer på marken, väggar med 
+                olika färger, samt andra Kiwi-bilar. För att komma åt denna data i 
+                koden gör man enligt följande:
+              </p>
 
-           <pre>
+              <pre>
 const detectionCount = perception.detectionCount;
 for (var i = 0; i &lt; detectionCount; i++) {
   const detection = perception.detection[i];
-  
+    
   const type = detection.type;
   const angle = detection.angle;
 }
-           </pre>
+              </pre>
 
-           <p>
-             Typ av detektion kan vara 'marking', 'bluebox', 'purplebox', 'wall' 
-             eller 'car'. Vinkeln bestäms i grader där en negativ vinkel är på 
-             Kiwis högra sida, och en positiv är på Kiwis vänstra sida.
-           </p>
+              <p>
+                Typ av detektion kan vara 'marking', 'bluebox', 'purplebox', 'wall' 
+                eller 'car'. Vinkeln bestäms i grader där en negativ vinkel är på 
+                Kiwis högra sida, och en positiv är på Kiwis vänstra sida.
+              </p>
+            </div>
+            <div id="control" class="tab-pane fade">
+              <h2>Styrning och hastighet</h2>
 
-           <h2>Styrning och hastighet</h2>
+              <p>
+                För att få Kiwi att röra sig behöver man skicka kommandon till motorerna 
+                och styrservon. Motorns hastighet anges i procent, där en negativ 
+                procent är backning. Styrningen anges i grader, där en positiv vinkel 
+                är åt vänster och en negativ åt höger. Koden för att få Kiwi att röra 
+                sig ser ut enligt följande:
+              </p>
 
-           <p>
-             För att få Kiwi att röra sig behöver man skicka kommandon till motorerna 
-             och styrservon. Motorns hastighet anges i procent, där en negativ 
-             procent är backning. Styrningen anges i grader, där en positiv vinkel 
-             är åt vänster och en negativ åt höger. Koden för att få Kiwi att röra 
-             sig ser ut enligt följande:
-           </p>
-
-           <pre>
+              <pre>
 actuation.motor = 50; 
 actuation.steering = 15; 
-           </pre>
+              </pre>
+            </div>
 
-           <h2>Minne</h2>
+            <div id="memory" class="tab-pane fade">
+              <h2>Minne</h2>
 
-           <p>
-            När koden är startad så körs den om gång på gång, och normalt så glöms 
-            alla värden bort mellan varje varv. För att kunna spara saker mellan 
-            varje varv så finns det en speciell minnesfunktion som man kan spara 
-            data i enligt följande:
-           </p>
+              <p>
+               När koden är startad så körs den om gång på gång, och normalt så glöms 
+               alla värden bort mellan varje varv. För att kunna spara saker mellan 
+               varje varv så finns det en speciell minnesfunktion som man kan spara 
+               data i enligt följande:
+               </p>
 
-           <pre>
+              <pre>
 memory.mittMinne = 123;
 memory.ettAnnatMinne = "Kom ihåg!";
-           </pre>
+              </pre>
 
-           <p>
-             Dessa värden kan senare läsas av i senare varv av körningen enligt följande:
-           </p>
+              <p>
+                Dessa värden kan senare läsas av i senare varv av körningen enligt följande:
+              </p>
 
-           <pre>
+              <pre>
 var minne1 = memory.mittMinne;
 var minne2 = memory.ettAnnatMinne;
-           </pre>
-
+              </pre>
+           </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Continue</button>
           </div>
         </div>
-
       </div>
     </div>
 
