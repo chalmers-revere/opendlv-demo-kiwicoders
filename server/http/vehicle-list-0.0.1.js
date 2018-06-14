@@ -111,7 +111,13 @@ var vehicleList = (function() {
       } else {
         fieldId = "vehicle" + vehicleId + "-right";
       }
-      $("#" + fieldId).text(d['opendlv_proxy_VoltageReading']['voltage']);
+      const voltage = d['opendlv_proxy_VoltageReading']['voltage'];
+      const distance = (1.7 - voltage) / 4.95;    
+      if (distance < 0.3) {
+        $("#" + fieldId).text(distance.toFixed(2));
+      } else {
+        $("#" + fieldId).text("> 0.3");
+      }
     }
   };
   return {
