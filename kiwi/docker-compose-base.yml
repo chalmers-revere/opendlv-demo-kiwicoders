@@ -12,9 +12,10 @@ services:
           memlock:
             soft: 4000000
             hard: 4000000
-        command: "opendlv-ui-videostream --cid=112 --freq=5 --name=cam0 --width=1280 --height=960 --bpp=24 --scaled-width=256 --scaled-height=192"
+        command: "opendlv-ui-videostream --cid=112 --freq=5 --name=cam0 --width=1280 --height=960 --bpp=24 --scaled-width=128 --scaled-height=96"
          
     proxy:
         image: chalmersrevere/opendlv-proxy-armhf:v0.0.1
         network_mode: "host"
-        command: "opendlv-proxy --cid=112 --target-ip=192.168.1.2 --target-port=${TARGET_PORT} --port=10000"
+        restart: always
+        command: "opendlv-proxy --cid=112 --target-ip=10.154.84.21 --target-port=${TARGET_PORT} --port=10000"
