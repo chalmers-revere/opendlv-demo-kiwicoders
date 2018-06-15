@@ -252,95 +252,94 @@ for (var i = 0; i &lt; 5; i++) {
                   hur man kan utöka sina programmeringsförmågor.
                 </p>
               </div>
+              <div id="sensors" class="tab-pane fade">
+                <h2>Sensorer</h2>
+
+                <p>
+                  Kiwi är utrustad med flera sensorer för att kunna läsa av sin omgivning. 
+                  Bland annat har den en kamera och fyra avståndssensorer. Med kameran 
+                  kan Kiwi tolka färger och mönster, och genom att kombinera detta med 
+                  avståndssensorerna får Kiwi möjlighet att navigera säkert.
+                </p>
+
+                <p>
+                  Avståndssensorerna ger ifrån sig mätdata i meter, där sensorerna fram 
+                  och bak har lång räckvidd och sensorerna på sidorna har kort räckvidd 
+                  (ca 30 cm). För att komma åt värdena i koden kan de läsas av enligt följande:
+                </p>
+
+                <pre>
+  const frontSensor = perception.front;
+  const rearSensor = perception.rear;
+  const leftSensor = perception.left;
+  const rightSensor = perception.right;
+                </pre>
+
+                <p>
+                  Kameran ger till skillnad från avståndssensorerna ifrån sig identifierade 
+                  ytor och objekt. Exempelvis kan den se linjer på marken, väggar med 
+                  olika färger, samt andra Kiwi-bilar. För att komma åt denna data i 
+                  koden gör man enligt följande:
+                </p>
+
+                <pre>
+  const detectionCount = perception.detectionCount;
+  for (var i = 0; i &lt; detectionCount; i++) {
+    const detection = perception.detection[i];
+      
+    const type = detection.type;
+    const angle = detection.angle;
+  }
+                </pre>
+
+                <p>
+                  Typ av detektion kan vara 'marking', 'bluebox', 'purplebox', 'wall' 
+                  eller 'car'. Vinkeln bestäms i grader där en negativ vinkel är på 
+                  Kiwis högra sida, och en positiv är på Kiwis vänstra sida.
+                </p>
+              </div>
+              <div id="control" class="tab-pane fade">
+                <h2>Styrning och hastighet</h2>
+
+                <p>
+                  För att få Kiwi att röra sig behöver man skicka kommandon till motorerna 
+                  och styrservon. Motorns hastighet anges i procent, där en negativ 
+                  procent är backning. Styrningen anges i grader, där en positiv vinkel 
+                  är åt vänster och en negativ åt höger. Koden för att få Kiwi att röra 
+                  sig ser ut enligt följande:
+                </p>
+
+                <pre>
+  actuation.motor = 50; 
+  actuation.steering = 15; 
+                </pre>
+              </div>
+
+              <div id="memory" class="tab-pane fade">
+                <h2>Minne</h2>
+
+                <p>
+                 När koden är startad så körs den om gång på gång, och normalt så glöms 
+                 alla värden bort mellan varje varv. För att kunna spara saker mellan 
+                 varje varv så finns det en speciell minnesfunktion som man kan spara 
+                 data i enligt följande:
+                 </p>
+
+                <pre>
+  memory.mittMinne = 123;
+  memory.ettAnnatMinne = "Kom ihåg!";
+                </pre>
+
+                <p>
+                  Dessa värden kan senare läsas av i senare varv av körningen enligt följande:
+                </p>
+
+                <pre>
+  var minne1 = memory.mittMinne;
+  var minne2 = memory.ettAnnatMinne;
+                </pre>
+              </div>
             </div>
-            <div id="sensors" class="tab-pane fade">
-              <h2>Sensorer</h2>
-
-              <p>
-                Kiwi är utrustad med flera sensorer för att kunna läsa av sin omgivning. 
-                Bland annat har den en kamera och fyra avståndssensorer. Med kameran 
-                kan Kiwi tolka färger och mönster, och genom att kombinera detta med 
-                avståndssensorerna får Kiwi möjlighet att navigera säkert.
-              </p>
-
-              <p>
-                Avståndssensorerna ger ifrån sig mätdata i meter, där sensorerna fram 
-                och bak har lång räckvidd och sensorerna på sidorna har kort räckvidd 
-                (ca 30 cm). För att komma åt värdena i koden kan de läsas av enligt följande:
-              </p>
-
-              <pre>
-const frontSensor = perception.front;
-const rearSensor = perception.rear;
-const leftSensor = perception.left;
-const rightSensor = perception.right;
-              </pre>
-
-              <p>
-                Kameran ger till skillnad från avståndssensorerna ifrån sig identifierade 
-                ytor och objekt. Exempelvis kan den se linjer på marken, väggar med 
-                olika färger, samt andra Kiwi-bilar. För att komma åt denna data i 
-                koden gör man enligt följande:
-              </p>
-
-              <pre>
-const detectionCount = perception.detectionCount;
-for (var i = 0; i &lt; detectionCount; i++) {
-  const detection = perception.detection[i];
-    
-  const type = detection.type;
-  const angle = detection.angle;
-}
-              </pre>
-
-              <p>
-                Typ av detektion kan vara 'marking', 'bluebox', 'purplebox', 'wall' 
-                eller 'car'. Vinkeln bestäms i grader där en negativ vinkel är på 
-                Kiwis högra sida, och en positiv är på Kiwis vänstra sida.
-              </p>
-            </div>
-            <div id="control" class="tab-pane fade">
-              <h2>Styrning och hastighet</h2>
-
-              <p>
-                För att få Kiwi att röra sig behöver man skicka kommandon till motorerna 
-                och styrservon. Motorns hastighet anges i procent, där en negativ 
-                procent är backning. Styrningen anges i grader, där en positiv vinkel 
-                är åt vänster och en negativ åt höger. Koden för att få Kiwi att röra 
-                sig ser ut enligt följande:
-              </p>
-
-              <pre>
-actuation.motor = 50; 
-actuation.steering = 15; 
-              </pre>
-            </div>
-
-            <div id="memory" class="tab-pane fade">
-              <h2>Minne</h2>
-
-              <p>
-               När koden är startad så körs den om gång på gång, och normalt så glöms 
-               alla värden bort mellan varje varv. För att kunna spara saker mellan 
-               varje varv så finns det en speciell minnesfunktion som man kan spara 
-               data i enligt följande:
-               </p>
-
-              <pre>
-memory.mittMinne = 123;
-memory.ettAnnatMinne = "Kom ihåg!";
-              </pre>
-
-              <p>
-                Dessa värden kan senare läsas av i senare varv av körningen enligt följande:
-              </p>
-
-              <pre>
-var minne1 = memory.mittMinne;
-var minne2 = memory.ettAnnatMinne;
-              </pre>
-           </div>
-          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Continue</button>
           </div>
