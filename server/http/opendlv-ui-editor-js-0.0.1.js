@@ -15,7 +15,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 $(document).ready(function(){
   setupUi();
 
-  $('#myModal').modal('show');
+  $('#welcomeModal').modal('show');
 });
 
 function setupUi() {

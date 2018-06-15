@@ -22,6 +22,7 @@ var vehicleList = (function() {
   m_knownVehicles = [],
   m_runningIntervals = {},
   m_simulatingIntervals = {},
+  m_memory = {},
 
   isFirstContact = function(vehicleId) {
     return m_knownVehicles.indexOf(vehicleId) == -1;
@@ -161,8 +162,12 @@ var vehicleList = (function() {
             steering : 0
           };
 
+          var memory = m_memory;
+
           var code = m_extractProgramCallback();
           eval(code);
+
+          m_memory = memory;
 
           $("#vehicle" + vehicleId + "-motor").text(Math.floor(actuation.motor));
           $("#vehicle" + vehicleId + "-steering").text(Math.floor(actuation.steering));
