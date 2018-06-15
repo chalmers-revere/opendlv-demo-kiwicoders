@@ -14,13 +14,15 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 $(document).ready(function(){
   setupUi();
+
+  $('#welcomeModal').modal('show');
 });
 
 function setupUi() {
   var lc = libcluon();
 
   if ("WebSocket" in window) {
-    var ws = new WebSocket("ws://" + window.location.host + "/", "od4");
+    var ws = new WebSocket("wss://" + window.location.host + "/", "od4");
     ws.binaryType = 'arraybuffer';
 
     ws.onopen = function() {

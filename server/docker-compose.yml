@@ -4,31 +4,32 @@ services:
     proxy-kiwi-1:
         image: chalmersrevere/opendlv-proxy-amd64:v0.0.1
         network_mode: "host"
-        command: "opendlv-proxy --cid=115 --target-ip=192.168.1.101 --target-port=10000 --port=10001 --sender-stamp-offset=1000"
+        command: "opendlv-proxy --cid=115 --target-ip=10.154.84.22 --target-port=10000 --port=10001 --sender-stamp-offset=1000"
 
     proxy-kiwi-2:
         image: chalmersrevere/opendlv-proxy-amd64:v0.0.1
         network_mode: "host"
-        command: "opendlv-proxy --cid=115 --target-ip=192.168.1.102 --target-port=10000 --port=10002 --sender-stamp-offset=2000"
+        command: "opendlv-proxy --cid=115 --target-ip=10.154.84.23 --target-port=10000 --port=10002 --sender-stamp-offset=2000"
 
     proxy-kiwi-3:
         image: chalmersrevere/opendlv-proxy-amd64:v0.0.1
         network_mode: "host"
-        command: "opendlv-proxy --cid=115 --target-ip=192.168.1.103 --target-port=10000 --port=10003 --sender-stamp-offset=3000"
+        command: "opendlv-proxy --cid=115 --target-ip=10.154.84.24 --target-port=10000 --port=10003 --sender-stamp-offset=3000"
 
     proxy-kiwi-4:
         image: chalmersrevere/opendlv-proxy-amd64:v0.0.1
         network_mode: "host"
-        command: "opendlv-proxy --cid=115 --target-ip=192.168.1.104 --target-port=10000 --port=10004 --sender-stamp-offset=4000"
+        command: "opendlv-proxy --cid=115 --target-ip=10.154.84.25 --target-port=10000 --port=10004 --sender-stamp-offset=4000"
     
     proxy-kiwi-5:
         image: chalmersrevere/opendlv-proxy-amd64:v0.0.1
         network_mode: "host"
-        command: "opendlv-proxy --cid=115 --target-ip=192.168.1.105 --target-port=10000 --port=10005 --sender-stamp-offset=5000"
+        command: "opendlv-proxy --cid=115 --target-ip=10.154.84.26 --target-port=10000 --port=10005 --sender-stamp-offset=5000"
 
     ui-server:
-        image: chalmersrevere/opendlv-ui-server-amd64:v0.0.9
+        image: chalmersrevere/opendlv-ui-server-amd64:vor
         network_mode: "host"
         volumes:
           - "./http:/srv/http"
-        command: "opendlv-ui-server --cid=115 --http-root=/srv/http --port=8000"
+          - "/etc/letsencrypt/live/opendlv.io/:/etc/opendlv.io/"
+        command: "opendlv-ui-server --cid=115 --http-root=/srv/http --port=443 --vor-ip-filter=10.154 --ssl-cert-path=/etc/opendlv.io/fullchain.pem --ssl-key-path=/etc/opendlv.io/privkey.pem"
