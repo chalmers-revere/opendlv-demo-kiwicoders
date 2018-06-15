@@ -110,7 +110,7 @@ function startProgramExecution(vehicleId) {
   const currentText = $("#run-program-vehicle" + vehicleId).text();
 
   if (defaultText == currentText) {
-    $("#run-program-vehicle" + vehicleId).text(defaultText + ", stop");
+    $("#run-program-vehicle" + vehicleId).text(defaultText + " (kör)");
   } else {
     $("#run-program-vehicle" + vehicleId).text(defaultText);
   }
