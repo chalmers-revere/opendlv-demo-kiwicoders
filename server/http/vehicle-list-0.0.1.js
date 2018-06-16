@@ -23,6 +23,7 @@ var vehicleList = (function() {
   m_runningIntervals = {},
   m_simulatingIntervals = {},
   m_memory = {},
+  m_lanes = [],
 
   isFirstContact = function(vehicleId) {
     return m_knownVehicles.indexOf(vehicleId) == -1;
@@ -37,7 +38,6 @@ var vehicleList = (function() {
     +   '<img id="vehicle' + vehicleId + '-video" alt="' + vehicleName + ' video feed">'
     +   '<div>'
     +     '<h4>' + vehicleName + '</h4>'
-    +     '<span class="available">(available)</span>'
     +     '<table class="vehicle-sensors">'
     +       '<tr>'
     +         '<td>Front:</td>'
@@ -114,10 +114,24 @@ var vehicleList = (function() {
       }
       const voltage = d['opendlv_proxy_VoltageReading']['voltage'];
       const distance = (1.7 - voltage) / 4.95;    
-      if (distance < 0.3) {
-        $("#" + fieldId).text(distance.toFixed(2));
-      } else {
-        $("#" + fieldId).text("> 0.3");
+      $("#" + fieldId).text(distance.toFixed(2));
+    } else if (d.dataType == 1111) {
+      var fieldId;
+      if (originalSenderStamp == 3) {
+        const angle = d['opendlv_logic_sensation_Point']['azimuthAngle'];
+        for (var i = 0; i < m_lanes.length; i++) {
+          var lane = m_lanes[i];
+          if (Math.abs(angle - lane.angle) < 0.05) {
+            m_lanes[i].angle = angle;
+            m_lanes[i].timestamp = Date.now();
+            return;
+          }
+        }
+        var lane = {
+          angle : angle,
+          timestamp : Date.now()
+        };
+        m_lanes.push(lane);
       }
     }
   };
@@ -149,13 +163,24 @@ var vehicleList = (function() {
     },
     runProgram : function(vehicleId) {
 
-      if (m_runningIntervals.vehicleId === undefined) {
+      if (m_runningIntervals[vehicleId] === undefined) {
       
         var interval = setInterval(function() {
+
+          var freshLanes = [];
+          for (var i = 0; i < m_lanes.length; i++) {
+            const detectionAge = Date.now() - m_lanes[i].timestamp;
+            if (detectionAge < 100) {
+              freshLanes.push(m_lanes[i]);
+            }
+          }
+          m_lanes = freshLanes;
+
           const perception = {front : Number($("#vehicle" + vehicleId + "-front").text()),
             rear : Number($("#vehicle" + vehicleId + "-rear").text()),
             left : Number($("#vehicle" + vehicleId + "-left").text()),
-            right : Number($("#vehicle" + vehicleId + "-right").text())
+            right : Number($("#vehicle" + vehicleId + "-right").text()),
+            lanes : m_lanes
           };
 
           var actuation = {motor : 0,
@@ -177,11 +202,11 @@ var vehicleList = (function() {
 
         }, 100);
 
-        m_runningIntervals.vehicleId = interval;
+        m_runningIntervals[vehicleId] = interval;
 
       } else {
-        clearInterval(m_runningIntervals.vehicleId);
-        delete m_runningIntervals.vehicleId;
+        clearInterval(m_runningIntervals[vehicleId]);
+        delete m_runningIntervals[vehicleId];
         $("#vehicle" + vehicleId + "-motor").text("0");
         $("#vehicle" + vehicleId + "-steering").text("0");
         controlMotor(vehicleId, 0);

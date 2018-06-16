@@ -93,14 +93,14 @@ const rearSensor = perception.rear;
 const leftSensor = perception.left;
 const rightSensor = perception.right;
 
-var speed = 15;
+var speed = 13;
 
-if (frontSensor &lt; 0.4) {
-  speed = 0;
+if (frontSensor &lt; 0.8) {
+  speed = -40;
 }
 
 actuation.motor = speed; 
-actuation.steering = 0;    
+actuation.steering = 15;    
     </div>
 
      <!-- Modal -->
