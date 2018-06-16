@@ -94,20 +94,39 @@
       </ul>
     </nav>
 
-    <div id="editor">const frontSensor = perception.front;
+    <div id="editor">// Först läser vi ut sensorvärden
+const frontSensor = perception.front;
 const rearSensor = perception.rear;
 const leftSensor = perception.left;
 const rightSensor = perception.right;
+const lanes = perception.lanes;
+const boxes = perception.boxes;
 
-var speed = 15;
+// Bilens beteende: Börja med att förbereda körnig framåt och styrning åt vänster
+var speed = 13;
+var steering = 15;
 
-if (frontSensor &lt; 0.4) {
-  speed = 0;
+// .. är det något framför bilen?
+if (frontSensor &lt; 0.8) {
+  // .. i så fall, förbered för backning och slumpmässig styrning åt höger
+  speed = -40;
+  steering = -15 * Math.random();
+  
+  // .. sen gå igenom alla lådor som vi ser framför oss
+  for (var i = 0; i &lt; boxes.length; i++) {
+    const box = boxes[i];
+    // .. är det en låda rakt framför oss som är lila?
+    if (Math.abs(box.angle) &lt; 0.1 &amp;&amp; box.color == 'purple') {
+      // .. i så fall ändrar vi oss och stannar (vi har hittat en FIN lila låda!)
+      speed = 0;
+      steering = 0;
+    }
+  }
 }
 
-actuation.motor = speed; 
-actuation.steering = 0;    
-    </div>
+// Skicka slutligen de styrsignaler som vi har bestämt oss för, hela koden körs sedan igen
+actuation.motor = speed;
+actuation.steering = steering;</div>
 
      <!-- Modal -->
     <div class="modal fade" id="welcomeModal" role="dialog">
