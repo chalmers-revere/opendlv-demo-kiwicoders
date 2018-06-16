@@ -111,7 +111,13 @@ if (frontSensor &lt; 0.8) {
   // .. i så fall, förbered för backning och slumpmässig styrning åt höger
   speed = -40;
   steering = -15 * Math.random();
-  
+ 
+  // .. om något är bakom oss så stannar vi
+  if (rearSensor &lt; 0.3) {
+    speed = 0;
+    steering = 0;
+  }
+
   // .. sen gå igenom alla lådor som vi ser framför oss
   for (var i = 0; i &lt; boxes.length; i++) {
     const box = boxes[i];
