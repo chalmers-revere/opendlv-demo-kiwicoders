@@ -305,16 +305,14 @@ const rightSensor = perception.right;
 for (var i = 0; i &lt; boxes.length; i++) {
   const box = boxes[i];
   const angle = box.angle;
-  const distance = box.distance;
   const color = box.color;
 }
             </pre>
 
             <p>
               Där 'angle' anger var i synfätet lådan finns, där en vinkel till vänster
-              är positiv, och en vinkel till höger är negativ (0 är precis i mitten), 'distance'
-              är en grov uppskattning av avstånd (TIPS: använd den främre avståndssensorn
-              som komplement), och 'color' är antingen 'blue' eller 'purple'.
+              är positiv, och en vinkel till höger är negativ (0 är precis i mitten), 
+              och 'color' är antingen 'blue' eller 'purple'.
             </p>
 
             <p>
