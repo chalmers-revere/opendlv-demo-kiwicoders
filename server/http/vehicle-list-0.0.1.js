@@ -128,7 +128,7 @@ var vehicleList = (function() {
         const distance = d['opendlv_logic_sensation_Point']['distance'];
         for (var i = 0; i < m_boxes.length; i++) {
           var box = m_boxes[i];
-          if (Math.abs(angle - box.angle) < 0.05 && Math.abs(distance - box.distance) < 0.1) {
+          if (Math.abs(angle - box.angle) < 0.1) {
             m_boxes[i].angle = angle;
             m_boxes[i].distance = distance;
             m_boxes[i].color = color;
