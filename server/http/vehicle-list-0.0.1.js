@@ -24,6 +24,7 @@ var vehicleList = (function() {
   m_simulatingIntervals = {},
   m_memory = {},
   m_lanes = [],
+  m_boxes = [],
 
   isFirstContact = function(vehicleId) {
     return m_knownVehicles.indexOf(vehicleId) == -1;
@@ -116,8 +117,33 @@ var vehicleList = (function() {
       const distance = (1.7 - voltage) / 4.95;    
       $("#" + fieldId).text(distance.toFixed(2));
     } else if (d.dataType == 1111) {
-      var fieldId;
-      if (originalSenderStamp == 3) {
+      if (originalSenderStamp == 1 || originalSenderStamp == 2) {
+        var color;
+        if (originalSenderStamp == 1) {
+          color = 'blue';
+        } else {
+          color = 'purple';
+        }
+        const angle = d['opendlv_logic_sensation_Point']['azimuthAngle'];
+        const distance = d['opendlv_logic_sensation_Point']['distance'];
+        for (var i = 0; i < m_boxes.length; i++) {
+          var box = m_boxes[i];
+          if (Math.abs(angle - box.angle) < 0.05 && Math.abs(distance - box.distance) < 0.1) {
+            m_boxes[i].angle = angle;
+            m_boxes[i].distance = distance;
+            m_boxes[i].color = color;
+            m_boxes[i].timestamp = Date.now();
+            return;
+          }
+        }
+        var box = {
+          angle : angle,
+          distance : distance,
+          color : color,
+          timestamp : Date.now()
+        };
+        m_boxes.push(box);
+      } else if (originalSenderStamp == 3) {
         const angle = d['opendlv_logic_sensation_Point']['azimuthAngle'];
         for (var i = 0; i < m_lanes.length; i++) {
           var lane = m_lanes[i];
@@ -166,6 +192,15 @@ var vehicleList = (function() {
       if (m_runningIntervals[vehicleId] === undefined) {
       
         var interval = setInterval(function() {
+          
+          var freshBoxes = [];
+          for (var i = 0; i < m_boxes.length; i++) {
+            const detectionAge = Date.now() - m_boxes[i].timestamp;
+            if (detectionAge < 100) {
+              freshBoxes.push(m_boxes[i]);
+            }
+          }
+          m_boxes = freshBoxes;
 
           var freshLanes = [];
           for (var i = 0; i < m_lanes.length; i++) {
@@ -180,7 +215,8 @@ var vehicleList = (function() {
             rear : Number($("#vehicle" + vehicleId + "-rear").text()),
             left : Number($("#vehicle" + vehicleId + "-left").text()),
             right : Number($("#vehicle" + vehicleId + "-right").text()),
-            lanes : m_lanes
+            lanes : m_lanes,
+            boxes : m_boxes
           };
 
           var actuation = {motor : 0,
