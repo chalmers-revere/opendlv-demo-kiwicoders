@@ -251,62 +251,35 @@ var vehicleList = (function() {
     },
     simulateProgram : function(vehicleId) {
 
-      if (m_runningIntervals[vehicleId] === undefined) {
+      if (m_simulatingIntervals.vehicleId === undefined) {
       
         var interval = setInterval(function() {
-          
-          var freshBoxes = [];
-          for (var i = 0; i < m_boxes.length; i++) {
-            const detectionAge = Date.now() - m_boxes[i].timestamp;
-            if (detectionAge < 100) {
-              freshBoxes.push(m_boxes[i]);
-            }
-          }
-          m_boxes = freshBoxes;
-
-          var freshLanes = [];
-          for (var i = 0; i < m_lanes.length; i++) {
-            const detectionAge = Date.now() - m_lanes[i].timestamp;
-            if (detectionAge < 100) {
-              freshLanes.push(m_lanes[i]);
-            }
-          }
-          m_lanes = freshLanes;
-
           const perception = {front : Number($("#vehicle" + vehicleId + "-front").text()),
             rear : Number($("#vehicle" + vehicleId + "-rear").text()),
             left : Number($("#vehicle" + vehicleId + "-left").text()),
-            right : Number($("#vehicle" + vehicleId + "-right").text()),
-            lanes : m_lanes,
-            boxes : m_boxes
+            right : Number($("#vehicle" + vehicleId + "-right").text())
           };
 
           var actuation = {motor : 0,
             steering : 0
           };
 
-          var memory = m_memory;
-
           var code = m_extractProgramCallback();
           eval(code);
-
-          m_memory = memory;
-
+          
           $("#vehicle" + vehicleId + "-motorsim").text(Math.floor(actuation.motor));
           $("#vehicle" + vehicleId + "-steeringsim").text(Math.floor(actuation.steering));
 
-          controlMotor(vehicleId, actuation.motor / 100);
-          controlSteering(vehicleId, actuation.steering / 100);
-
         }, 100);
 
-        m_runningIntervals[vehicleId] = interval;
+        m_simulatingIntervals.vehicleId = interval;
 
       } else {
-        clearInterval(m_runningIntervals[vehicleId]);
-        delete m_runningIntervals[vehicleId];
+        clearInterval(m_simulatingIntervals.vehicleId);
+        delete m_simulatingIntervals.vehicleId;
         $("#vehicle" + vehicleId + "-motorsim").text("0");
         $("#vehicle" + vehicleId + "-steeringsim").text("0");
       }
+    }
   };
 })();
