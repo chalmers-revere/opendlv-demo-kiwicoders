@@ -17,6 +17,8 @@ services:
     perception-vor:
         image: chalmersrevere/opendlv-perception-vor-armhf:v0.0.1
         restart: always
+        depends_on: 
+          - device-camera-rpicamv2
         network_mode: "host"
         volumes:
           - "/dev/shm:/dev/shm"
@@ -26,11 +28,13 @@ services:
           memlock:
             soft: 4000000
             hard: 4000000
-        command: "sleep 5 && opendlv-perception-vor --cid=112 --width=1280 --height=960 --bpp=24 --widthscaled=640 --heightscaled=480 --widthout=128 --heightout=96 --haarfile=/opt/cascade.xml --shmin=cam0 --shmout=view0 --cropbottom=120 --croptop=320 --croptophorizon=320 --verbose"
+        command: "opendlv-perception-vor --cid=112 --width=1280 --height=960 --bpp=24 --widthscaled=640 --heightscaled=480 --widthout=128 --heightout=96 --haarfile=/opt/cascade.xml --shmin=cam0 --shmout=view0 --cropbottom=320 --croptop=120 --croptophorizon=290 --verbose --disablekiwi"
 
     ui-videostream:
         image: chalmersrevere/opendlv-ui-videostream-armhf:v0.0.2
         restart: always
+        depends_on: 
+          - perception-vor
         network_mode: "host"
         volumes:
           - "/dev/shm:/dev/shm"
@@ -39,7 +43,8 @@ services:
           memlock:
             soft: 4000000
             hard: 4000000
-        command: "opendlv-ui-videostream --cid=112 --freq=3 --name=cam0 --width=1280 --height=960 --bpp=24 --scaled-width=128 --scaled-height=96"
+        command: "opendlv-ui-videostream --cid=112 --freq=3 --name=view0 --width=128 --height=96 --bpp=24 --scaled-width=128 --scaled-height=96"
+        #command: "opendlv-ui-videostream --cid=112 --freq=3 --name=cam0 --width=1280 --height=960 --bpp=24 --scaled-width=128 --scaled-height=96"
          
     proxy:
         image: chalmersrevere/opendlv-proxy-armhf:v0.0.1
