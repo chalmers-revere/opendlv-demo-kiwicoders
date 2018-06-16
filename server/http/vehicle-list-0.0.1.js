@@ -199,7 +199,7 @@ var vehicleList = (function() {
           var freshBoxes = [];
           for (var i = 0; i < m_boxes[vehicleId].length; i++) {
             const detectionAge = Date.now() - m_boxes[vehicleId][i].timestamp;
-            if (detectionAge < 100) {
+            if (detectionAge < 200) {
               freshBoxes.push(m_boxes[vehicleId][i]);
             }
           }
@@ -208,7 +208,7 @@ var vehicleList = (function() {
           var freshLanes = [];
           for (var i = 0; i < m_lanes[vehicleId].length; i++) {
             const detectionAge = Date.now() - m_lanes[vehicleId][i].timestamp;
-            if (detectionAge < 100) {
+            if (detectionAge < 200) {
               freshLanes.push(m_lanes[vehicleId][i]);
             }
           }
