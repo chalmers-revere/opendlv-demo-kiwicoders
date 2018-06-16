@@ -105,17 +105,6 @@ if (frontSensor &lt; 0.8) {
   // .. i så fall, förbered för backning och slumpmässig styrning åt höger
   speed = -40;
   steering = -15 * Math.random();
-  
-  // .. sen gå igenom alla lådor som vi ser framför oss
-  for (var i = 0; i &lt; boxes.length; i++) {
-    const box = boxes[i];
-    // .. är det en låda rakt framför oss som är lila?
-    if (Math.abs(box.angle) &lt; 0.1 &amp;&amp; box.color == 'purple') {
-      // .. i så fall ändrar vi oss och stannar (vi har hittat en FIN lila låda!)
-      speed = 0;
-      steering = 0;
-    }
-  }
 }
 
 // Skicka slutligen de styrsignaler som vi har bestämt oss för, hela koden körs sedan igen
