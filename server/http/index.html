@@ -24,7 +24,7 @@
           <a class="nav-link" href="#" onclick="$('#instructionsModal').modal('show');">Instruktioner</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" onclick="toggleDiv('vehicle-panels')" href="#">Dölj bilar</a>
+          <a class="nav-link" onclick="toggleDiv('vehicle-panels')" href="#">Hide cars</a>
         </li>
 <!--        <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -88,39 +88,19 @@
       </ul>
     </nav>
 
-    <div id="editor">// Först läser vi ut sensorvärden
-const frontSensor = perception.front;
+    <div id="editor">const frontSensor = perception.front;
 const rearSensor = perception.rear;
 const leftSensor = perception.left;
 const rightSensor = perception.right;
-const lanes = perception.lanes;
-const boxes = perception.boxes;
 
-// Bilens beteende: Börja med att förbereda körnig framåt och styrning åt vänster
-var speed = 13;
-var steering = 15;
+var speed = 15;
 
-// .. är det något framför bilen?
-if (frontSensor &lt; 0.8) {
-  // .. i så fall, förbered för backning och slumpmässig styrning åt höger
-  speed = -40;
-  steering = -15 * Math.random();
-  
-  // .. sen gå igenom alla lådor som vi ser framför oss
-  for (var i = 0; i &lt; boxes.length; i++) {
-    const box = boxes[i];
-    // .. är det en låda rakt framför oss som är lila?
-    if (Math.abs(box.angle) &lt; 0.1 &amp;&amp; box.color == 'purple') {
-      // .. i så fall ändrar vi oss och stannar (vi har hittat en FIN lila låda!)
-      speed = 0;
-      steering = 0;
-    }
-  }
+if (frontSensor &lt; 0.4) {
+  speed = 0;
 }
 
-// Skicka slutligen de styrsignaler som vi har bestämt oss för, hela koden körs sedan igen
-actuation.motor = speed;
-actuation.steering = steering;
+actuation.motor = speed; 
+actuation.steering = 0;    
     </div>
 
      <!-- Modal -->
@@ -297,31 +277,41 @@ const leftSensor = perception.left;
 const rightSensor = perception.right;
             </pre>
 
-
-            <!--
             <p>
               Kameran ger till skillnad från avståndssensorerna ifrån sig identifierade 
-              ytor och objekt. Exempelvis kan den se linjer på marken, väggar med 
-              olika färger, samt andra Kiwi-bilar. För att komma åt denna data i 
-              koden gör man enligt följande:
+              linjer och lådor. För att komma åt lådor gör man enligt följande:
             </p>
 
             <pre>
-const detectionCount = perception.detectionCount;
-for (var i = 0; i &lt; detectionCount; i++) {
-const detection = perception.detection[i];
-  
-const type = detection.type;
-const angle = detection.angle;
+for (var i = 0; i &lt; boxes.length; i++) {
+  const box = boxes[i];
+  const angle = box.angle;
+  const distance = box.distance;
+  const color = box.color;
 }
             </pre>
 
             <p>
-              Typ av detektion kan vara 'marking', 'bluebox', 'purplebox', 'wall' 
-              eller 'car'. Vinkeln bestäms i grader där en negativ vinkel är på 
-              Kiwis högra sida, och en positiv är på Kiwis vänstra sida.
+              Där 'angle' anger var i synfätet lådan finns, där en vinkel till vänster
+              är positiv, och en vinkel till höger är negativ (0 är precis i mitten), 'distance'
+              är en grov uppskattning av avstånd (TIPS: använd den främre avståndssensorn
+              som komplement), och 'color' är antingen 'blue' eller 'purple'.
             </p>
-            -->
+
+            <p>
+              För att komma åt linjer gör man på ett liknande sätt, nämligen:
+            </p>
+            <pre>
+for (var i = 0; i &lt; lanes.length; i++) {
+  const lane = lanes[i];
+  const angle = lane.angle;
+}
+            </pre>
+
+            <p>
+              Där 'angle' anger var i synfätet linjen finns, där längst till vänster 
+              har värdet 1, och längst till höger har värdet -1 (0 är precis i mitten).
+            </p>
 
             <h2>Styrning och hastighet</h2>
 
