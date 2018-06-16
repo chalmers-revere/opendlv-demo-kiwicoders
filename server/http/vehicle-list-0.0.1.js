@@ -23,8 +23,8 @@ var vehicleList = (function() {
   m_runningIntervals = {},
   m_simulatingIntervals = {},
   m_memory = {},
-  m_lanes = [],
-  m_boxes = [],
+  m_lanes = {},
+  m_boxes = {},
 
   isFirstContact = function(vehicleId) {
     return m_knownVehicles.indexOf(vehicleId) == -1;
@@ -126,13 +126,13 @@ var vehicleList = (function() {
         }
         const angle = d['opendlv_logic_sensation_Point']['azimuthAngle'];
         const distance = d['opendlv_logic_sensation_Point']['distance'];
-        for (var i = 0; i < m_boxes.length; i++) {
-          var box = m_boxes[i];
+        for (var i = 0; i < m_boxes[vehicleId].length; i++) {
+          var box = m_boxes[vehicleId][i];
           if (Math.abs(angle - box.angle) < 0.1) {
-            m_boxes[i].angle = angle;
-            m_boxes[i].distance = distance;
-            m_boxes[i].color = color;
-            m_boxes[i].timestamp = Date.now();
+            m_boxes[vehicleId][i].angle = angle;
+            m_boxes[vehicleId][i].distance = distance;
+            m_boxes[vehicleId][i].color = color;
+            m_boxes[vehicleId][i].timestamp = Date.now();
             return;
           }
         }
@@ -142,14 +142,14 @@ var vehicleList = (function() {
           color : color,
           timestamp : Date.now()
         };
-        m_boxes.push(box);
+        m_boxes[vehicleId].push(box);
       } else if (originalSenderStamp == 3) {
         const angle = d['opendlv_logic_sensation_Point']['azimuthAngle'];
-        for (var i = 0; i < m_lanes.length; i++) {
-          var lane = m_lanes[i];
+        for (var i = 0; i < m_lanes[vehicleId].length; i++) {
+          var lane = m_lanes[vehicleId][i];
           if (Math.abs(angle - lane.angle) < 0.05) {
-            m_lanes[i].angle = angle;
-            m_lanes[i].timestamp = Date.now();
+            m_lanes[vehicleId][i].angle = angle;
+            m_lanes[vehicleId][i].timestamp = Date.now();
             return;
           }
         }
@@ -157,7 +157,7 @@ var vehicleList = (function() {
           angle : angle,
           timestamp : Date.now()
         };
-        m_lanes.push(lane);
+        m_lanes[vehicleId].push(lane);
       }
     }
   };
@@ -182,6 +182,9 @@ var vehicleList = (function() {
       if (isFirstContact(vehicleId)) {
         generateVehiclePanel(vehicleId);
         m_firstContactCallback(vehicleId);
+        m_memory[vehicleId] = {};
+        m_lanes[vehicleId] = [];
+        m_boxes[vehicleId] = [];
         m_knownVehicles.push(vehicleId);
       }
 
@@ -194,41 +197,41 @@ var vehicleList = (function() {
         var interval = setInterval(function() {
           
           var freshBoxes = [];
-          for (var i = 0; i < m_boxes.length; i++) {
-            const detectionAge = Date.now() - m_boxes[i].timestamp;
+          for (var i = 0; i < m_boxes[vehicleId].length; i++) {
+            const detectionAge = Date.now() - m_boxes[vehicleId][i].timestamp;
             if (detectionAge < 100) {
-              freshBoxes.push(m_boxes[i]);
+              freshBoxes.push(m_boxes[vehicleId][i]);
             }
           }
-          m_boxes = freshBoxes;
+          m_boxes[vehicleId] = freshBoxes;
 
           var freshLanes = [];
-          for (var i = 0; i < m_lanes.length; i++) {
-            const detectionAge = Date.now() - m_lanes[i].timestamp;
+          for (var i = 0; i < m_lanes[vehicleId].length; i++) {
+            const detectionAge = Date.now() - m_lanes[vehicleId][i].timestamp;
             if (detectionAge < 100) {
-              freshLanes.push(m_lanes[i]);
+              freshLanes.push(m_lanes[vehicleId][i]);
             }
           }
-          m_lanes = freshLanes;
+          m_lanes[vehicleId] = freshLanes;
 
           const perception = {front : Number($("#vehicle" + vehicleId + "-front").text()),
             rear : Number($("#vehicle" + vehicleId + "-rear").text()),
             left : Number($("#vehicle" + vehicleId + "-left").text()),
             right : Number($("#vehicle" + vehicleId + "-right").text()),
-            lanes : m_lanes,
-            boxes : m_boxes
+            lanes : m_lanes[vehicleId],
+            boxes : m_boxes[vehicleId]
           };
 
           var actuation = {motor : 0,
             steering : 0
           };
 
-          var memory = m_memory;
+          var memory = m_memory[vehicleId];
 
           var code = m_extractProgramCallback();
           eval(code);
 
-          m_memory = memory;
+          m_memory[vehicleId] = memory;
 
           $("#vehicle" + vehicleId + "-motor").text(Math.floor(actuation.motor));
           $("#vehicle" + vehicleId + "-steering").text(Math.floor(actuation.steering));
@@ -256,41 +259,41 @@ var vehicleList = (function() {
         var interval = setInterval(function() {
           
           var freshBoxes = [];
-          for (var i = 0; i < m_boxes.length; i++) {
-            const detectionAge = Date.now() - m_boxes[i].timestamp;
+          for (var i = 0; i < m_boxes[vehicleId].length; i++) {
+            const detectionAge = Date.now() - m_boxes[vehicleId][i].timestamp;
             if (detectionAge < 100) {
-              freshBoxes.push(m_boxes[i]);
+              freshBoxes.push(m_boxes[vehicleId][i]);
             }
           }
-          m_boxes = freshBoxes;
+          m_boxes[vehicleId] = freshBoxes;
 
           var freshLanes = [];
-          for (var i = 0; i < m_lanes.length; i++) {
-            const detectionAge = Date.now() - m_lanes[i].timestamp;
+          for (var i = 0; i < m_lanes[vehicleId].length; i++) {
+            const detectionAge = Date.now() - m_lanes[vehicleId][i].timestamp;
             if (detectionAge < 100) {
-              freshLanes.push(m_lanes[i]);
+              freshLanes.push(m_lanes[vehicleId][i]);
             }
           }
-          m_lanes = freshLanes;
+          m_lanes[vehicleId] = freshLanes;
 
           const perception = {front : Number($("#vehicle" + vehicleId + "-front").text()),
             rear : Number($("#vehicle" + vehicleId + "-rear").text()),
             left : Number($("#vehicle" + vehicleId + "-left").text()),
             right : Number($("#vehicle" + vehicleId + "-right").text()),
-            lanes : m_lanes,
-            boxes : m_boxes
+            lanes : m_lanes[vehicleId],
+            boxes : m_boxes[vehicleId]
           };
 
           var actuation = {motor : 0,
             steering : 0
           };
 
-          var memory = m_memory;
+          var memory = m_memory[vehicleId];
 
           var code = m_extractProgramCallback();
           eval(code);
 
-          m_memory = memory;
+          m_memory[vehicleId] = memory;
 
           $("#vehicle" + vehicleId + "-motorsim").text(Math.floor(actuation.motor));
           $("#vehicle" + vehicleId + "-steeringsim").text(Math.floor(actuation.steering));
