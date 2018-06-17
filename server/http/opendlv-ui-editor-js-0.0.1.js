@@ -177,6 +177,7 @@ function loadExampleCode(index) {
         + 'var speed = 13;\n'
         + 'var time = Date.now();\n'
         + 'var turnTime = 0;\n'
+        + 'var turningAngle = 0;\n'
         + '\n'
         + 'if (frontSensor < 0.6 ) {\n'
         + '   if (memory.turning !== true) {\n'
