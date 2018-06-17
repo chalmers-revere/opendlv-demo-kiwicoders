@@ -55,17 +55,16 @@
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
       <!-- Links -->
       <ul class="navbar-nav">
-	      <!--
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Import example code
+            Ladda exempel
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Simple avoidance</a>
-            <a class="dropdown-item" href="#">Emergency brake</a>
+            <a class="dropdown-item" onclick="loadExampleCode(0)" href="#">Kör i cirkel och undvik hinder</a>
+            <a class="dropdown-item" onclick="loadExampleCode(1)" href="#">Utforska (med minne)</a>
+            <a class="dropdown-item" onclick="loadExampleCode(2)" href="#">Hitta lila låda</a>
           </div>
         </li>
-	      -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Kör
@@ -88,45 +87,7 @@
       </ul>
     </nav>
 
-    <div id="editor">// Först läser vi ut sensorvärden
-const frontSensor = perception.front;
-const rearSensor = perception.rear;
-const leftSensor = perception.left;
-const rightSensor = perception.right;
-const lanes = perception.lanes;
-const boxes = perception.boxes;
-
-// Bilens beteende: Börja med att förbereda körnig framåt och styrning åt vänster
-var speed = 13;
-var steering = 15;
-
-// .. är det något framför bilen?
-if (frontSensor &lt; 0.8) {
-  // .. i så fall, förbered för backning och slumpmässig styrning åt höger
-  speed = -40;
-  steering = -15 * Math.random();
-  
-  // .. om något är bakom oss så stannar vi
-  if (rearSensor &lt; 0.3) {
-    speed = 0;
-    steering = 0;
-  }
-  
-  // .. sen gå igenom alla lådor som vi ser framför oss
-  for (var i = 0; i &lt; boxes.length; i++) {
-    const box = boxes[i];
-    // .. är det en låda rakt framför oss som är lila?
-    if (Math.abs(box.angle) &lt; 0.6 &amp;&amp; box.color == 'purple') {
-      // .. i så fall ändrar vi oss och stannar (vi har hittat en FIN lila låda!)
-      speed = 0;
-      steering = 0;
-    }
-  }
-}
-
-// Skicka slutligen de styrsignaler som vi har bestämt oss för, hela koden körs sedan igen
-actuation.motor = speed;
-actuation.steering = steering;</div>
+    <div id="editor"></div>
 
      <!-- Modal -->
     <div class="modal fade" id="welcomeModal" role="dialog">

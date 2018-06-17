@@ -15,6 +15,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 $(document).ready(function(){
   setupUi();
 
+  loadExampleCode(0);
   $('#welcomeModal').modal('show');
 });
 
@@ -134,4 +135,122 @@ function startProgramSimulation(vehicleId) {
 function toggleDiv(id) {
   var div = document.getElementById(id);
   div.style.display = div.style.display == "none" ? "block" : "none";
+}
+
+function loadExampleCode(index) {
+  var code;
+  switch (index) {
+    case 0:
+      code = '// Först läser vi ut sensorvärden\n'
+        + 'const frontSensor = perception.front;\n'
+        + 'const rearSensor = perception.rear;\n'
+        + 'const leftSensor = perception.left;\n'
+        + 'const rightSensor = perception.right;\n'
+        + '\n'
+        + '// Bilens beteende: Börja med att förbereda körnig framåt och styrning åt vänster\n'
+        + 'var speed = 13;\n'
+        + 'var steering = 15;\n'
+        + '\n'
+        + '// .. är det något framför bilen?\n'
+        + 'if (frontSensor < 0.8) {\n'
+        + '  // .. i så fall, förbered för backning och styrning åt höger\n'
+        + '  speed = -40;\n'
+        + '  steering = -15;\n'
+        + '  \n'
+        + '  // .. om något är bakom oss så stannar vi\n'
+        + '  if (rearSensor < 0.2) {\n'
+        + '    speed = 0;\n'
+        + '    steering = 0;\n'
+        + '  }\n'
+        + '}\n'
+        + '\n'
+        + '// Skicka slutligen de styrsignaler som vi har bestämt oss för, hela koden körs sedan igen\n'
+        + 'actuation.motor = speed;\n'
+        + 'actuation.steering = steering;';
+      break;
+    case 1:
+      code = 'const frontSensor = perception.front;\n'
+        + 'const rearSensor = perception.rear;\n'
+        + 'const leftSensor = perception.left;\n'
+        + 'const rightSensor = perception.right;\n'
+        + '\n'
+        + 'var speed = 12;\n'
+        + 'var time = Date.now();\n'
+        + 'var turnTime = 0;\n'
+        + 'var turningAngle = 0;\n'
+        + '\n'
+        + 'if (frontSensor < 0.35 ) {\n'
+        + '   if(memory.turning !== true) {\n'
+        + '     memory.turningTime = Date.now();\n'
+        + '     memory.randomAngle = (Math.random() < 0.5)*-60 + 30;\n'
+        + '     memory.turning = true;\n'
+        + '   }\n'
+        + '}\n'
+        + 'if (memory.turning === true) {\n'
+        + '    turningAngle = memory.randomAngle;\n'
+        + '\n'    
+        + '    if(Math.floor((Date.now() - memory.turningTime)/1000) > 1) {\n'
+        + '        memory.turning = false;\n'
+        + '    }\n'
+        + '    speed = -40;\n'
+        + '}\n'
+        + '\n'
+        + 'if (leftSensor < 0.2) {\n'
+        + '    turningAngle = -40;\n'
+        + '}\n'
+        + '\n'
+        + 'if (rightSensor < 0.2) {\n'
+        + '    turningAngle = 40;\n'
+        + '}\n'
+        + '\n'
+        + 'if (rearSensor < 0.3) {\n'
+        + '    speed = 12;\n'
+        + '}\n'
+        + '\n'
+        + 'actuation.motor = speed;\n'
+        + 'actuation.steering = turningAngle;';
+      break;
+    case 2:
+      code = '// Först läser vi ut sensorvärden\n'
+        + 'const frontSensor = perception.front;\n'
+        + 'const rearSensor = perception.rear;\n'
+        + 'const leftSensor = perception.left;\n'
+        + 'const rightSensor = perception.right;\n'
+        + 'const lanes = perception.lanes;\n'
+        + 'const boxes = perception.boxes;\n'
+        + '\n'
+        + '// Bilens beteende: Börja med att förbereda körnig framåt och styrning åt vänster\n'
+        + 'var speed = 13;\n'
+        + 'var steering = 15;\n'
+        + '\n'
+        + '// .. är det något framför bilen?\n'
+        + 'if (frontSensor < 0.8) {\n'
+        + '  // .. i så fall, förbered för backning och slumpmässig styrning åt höger\n'
+        + '  speed = -40;\n'
+        + '  steering = -15 * Math.random();\n'
+        + '  \n'
+        + '  // .. om något är bakom oss så stannar vi\n'
+        + '  if (rearSensor < 0.3) {\n'
+        + '    speed = 0;\n'
+        + '    steering = 0;\n'
+        + '  }\n'
+        + '  \n'
+        + '  // .. sen gå igenom alla lådor som vi ser framför oss\n'
+        + '  for (var i = 0; i < boxes.length; i++) {\n'
+        + '    const box = boxes[i];\n'
+        + '    // .. är det en låda rakt framför oss som är lila?\n'
+        + '    if (Math.abs(box.angle) < 0.6 && box.color == \'purple\') {\n'
+        + '      // .. i så fall ändrar vi oss och stannar (vi har hittat en FIN lila låda!)\n'
+        + '      speed = 0;\n'
+        + '      steering = 0;\n'
+        + '    }\n'
+        + '  }\n'
+        + '}\n'
+        + '\n'
+        + '// Skicka slutligen de styrsignaler som vi har bestämt oss för, hela koden körs sedan igen\n'
+        + 'actuation.motor = speed;\n'
+        + 'actuation.steering = steering;';
+      break;
+  }
+  editor.setValue(code, -1);
 }
