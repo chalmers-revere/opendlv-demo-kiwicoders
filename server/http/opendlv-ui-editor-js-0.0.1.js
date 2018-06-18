@@ -163,6 +163,7 @@ function loadExampleCode(index) {
   switch (index) {
     case 0:
       code = '// Läs ut sensorer\n'
+        + 'const frontSensor = perception.front;\n'
         + 'const rearSensor = perception.rear;\n'
         + 'const leftSensor = perception.left;\n'
         + 'const rightSensor = perception.right;\n'
