@@ -98,6 +98,10 @@ var vehicleList = (function() {
     const originalSenderStamp = d.senderStamp - vehicleId * m_senderStampMod;
     if (d.dataType == 1055) {
       $("#vehicle" + vehicleId + "-video").attr("src", "data:image/jpeg;base64," + d['opendlv_proxy_ImageReading']['data']);
+    } else if (d.dataType == 1086) {
+      console.log('position ' + d['opendlv_proxy_PedalPositionRequest']['position']);
+    } else if (d.dataType == 1090) {
+      console.log('steering ' + d['opendlv_proxy_GroundSteeringRequest']['groundSteering']);
     } else if (d.dataType == 1039) {
       var fieldId;
       if (originalSenderStamp == 0) {
