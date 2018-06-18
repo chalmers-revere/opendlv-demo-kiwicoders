@@ -88,8 +88,8 @@ function onStreamOpen(ws, lc) {
 
   function firstContactCallback(vehicleId) {
     const name = "Car " + vehicleId;
-    const runHtml = $("#run-program-dropdown").html() + '<a id="run-program-vehicle' + vehicleId + '" class="dropdown-item" href="javascript:void(0)" onclick="startProgramExecution(' + vehicleId + ')">' + name + '</a>';
-    const simulateHtml = $("#simulate-program-dropdown").html() + '<a id="simulate-program-vehicle' + vehicleId + '" class="dropdown-item" href="javascript:void(0)" onclick="startProgramSimulation(' + vehicleId + ')">' + name + '</a>';
+    const runHtml = $("#run-program-dropdown").html() + '<a id="run-program-vehicle' + vehicleId + '" class="dropdown-item" href="javascript:void(0);" onclick="startProgramExecution(' + vehicleId + ')">' + name + '</a>';
+    const simulateHtml = $("#simulate-program-dropdown").html() + '<a id="simulate-program-vehicle' + vehicleId + '" class="dropdown-item" href="javascript:void(0);" onclick="startProgramSimulation(' + vehicleId + ')">' + name + '</a>';
     
     $("#run-program-dropdown").html(runHtml);
     $("#simulate-program-dropdown").html(simulateHtml);
