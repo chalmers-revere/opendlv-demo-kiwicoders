@@ -162,30 +162,21 @@ function loadExampleCode(index) {
   var code;
   switch (index) {
     case 0:
-      code = '// Först läser vi ut sensorvärden\n'
-        + 'const frontSensor = perception.front;\n'
+      code = '// Läs ut sensorer\n'
         + 'const rearSensor = perception.rear;\n'
         + 'const leftSensor = perception.left;\n'
         + 'const rightSensor = perception.right;\n'
         + '\n'
-        + '// Bilens beteende: Börja med att förbereda körnig framåt och styrning åt vänster\n'
         + 'var speed = 13;\n'
         + 'var steering = 15;\n'
         + '\n'
         + '// .. är det något framför bilen?\n'
         + 'if (frontSensor < 0.8) {\n'
-        + '  // .. i så fall, förbered för backning och styrning åt höger\n'
         + '  speed = -40;\n'
         + '  steering = -15;\n'
-        + '  \n'
-        + '  // .. om något är bakom oss så stannar vi\n'
-        + '  if (rearSensor < 0.2) {\n'
-        + '    speed = 0;\n'
-        + '    steering = 0;\n'
-        + '  }\n'
         + '}\n'
         + '\n'
-        + '// Skicka slutligen de styrsignaler som vi har bestämt oss för, hela koden körs sedan igen\n'
+        + '// Skicka styrsignaler, sen körs hela koden igen\n'
         + 'actuation.motor = speed;\n'
         + 'actuation.steering = steering;';
       break;
