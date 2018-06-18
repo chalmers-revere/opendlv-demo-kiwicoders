@@ -22,9 +22,22 @@ $(document).ready(function(){
    const txt = editor.getValue();
    const d = new Date();
 	 const time = d.getFullYear() + '-' + (d.getMonth() < 10 ? '0' + d.getMonth() : d.getMonth()) + '-' + (d.getDate() < 10 ? '0' + d.getDate() : d.getDate()) + '_' + (d.getHours() < 10 ? '0' + d.getHours() : d.getHours()) + (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes()) + (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
-   this.download = download = 'kiwi-code-' + time + '.js';
+   this.download = download = 'kiwi-code-' + time + '.txt';
    this.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(txt);
  };
+
+ document.getElementById('openCodeLink').addEventListener('change', function(e) {
+   var file = this.files[0];
+   var textType = /text.*/;
+
+   if (file.type.match(textType)) {
+     var reader = new FileReader();
+     reader.onload = function(e) {
+       editor.setValue(reader.result, -1);
+     }
+     reader.readAsText(file);	
+   }
+ });
 });
 
 function setupUi() {
