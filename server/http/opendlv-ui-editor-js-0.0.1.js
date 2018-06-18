@@ -17,6 +17,11 @@ $(document).ready(function(){
 
   loadExampleCode(0);
   $('#welcomeModal').modal('show');
+
+ document.getElementById('downloadCodeLink').onclick = function(code) {
+   const txt = editor.getValue();
+   this.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(txt);
+ };
 });
 
 function setupUi() {
@@ -135,11 +140,6 @@ function startProgramSimulation(vehicleId) {
 function toggleDiv(id) {
   var div = document.getElementById(id);
   div.style.display = div.style.display == "none" ? "block" : "none";
-}
-
-function downloadCode() {
-  const txt = editor.getValue();
-  this.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(txt);
 }
 
 function loadExampleCode(index) {
