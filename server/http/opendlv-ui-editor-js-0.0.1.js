@@ -20,6 +20,9 @@ $(document).ready(function(){
 
  document.getElementById('downloadCodeLink').onclick = function(code) {
    const txt = editor.getValue();
+   const d = new Date();
+	 const time = d.getFullYear() + '-' + (d.getMonth() < 10 ? '0' + d.getMonth() : d.getMonth()) + '-' + (d.getDate() < 10 ? '0' + d.getDate() : d.getDate()) + '_' + (d.getHours() < 10 ? '0' + d.getHours() : d.getHours()) + (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes()) + (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
+   this.download = download = 'kiwi-code-' + time + '.js';
    this.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(txt);
  };
 });
