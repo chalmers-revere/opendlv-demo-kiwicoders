@@ -62,20 +62,20 @@
 }
 
 .inputfile + label {
-    font-size: 16px;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.75);
-    background-color: black;
-    display: block;
-    line-height: 24px;
-    padding: 8px;
-    text-align: left;
-    text-decoration: none;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.75);
+  display: block;
+  line-height: 24px;
+  padding: 8px;
+  text-align: left;
+  text-decoration: none;
+  margin: 0px;
 }
 
 .inputfile:focus + label,
 .inputfile + label:hover {
-    background-color: white;
+  color: white;
 }
 
 .inputfile + label {
