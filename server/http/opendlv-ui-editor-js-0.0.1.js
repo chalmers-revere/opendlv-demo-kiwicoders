@@ -137,6 +137,11 @@ function toggleDiv(id) {
   div.style.display = div.style.display == "none" ? "block" : "none";
 }
 
+function downloadCode() {
+  const txt = editor.getValue();
+  this.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(txt);
+}
+
 function loadExampleCode(index) {
   var code;
   switch (index) {
