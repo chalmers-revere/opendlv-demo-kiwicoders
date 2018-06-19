@@ -99,9 +99,11 @@ var vehicleList = (function() {
     if (d.dataType == 1055) {
       $("#vehicle" + vehicleId + "-video").attr("src", "data:image/jpeg;base64," + d['opendlv_proxy_ImageReading']['data']);
     } else if (d.dataType == 1086) {
-  //    $("#vehicle" + vehicleId + "-motor").text(Math.floor(d['opendlv_proxy_PedalPositionRequest']['position']));
+      const motor = Math.floor(d['opendlv_proxy_PedalPositionRequest']['position'] * 100);
+      $("#vehicle" + vehicleId + "-motor").text(motor);
     } else if (d.dataType == 1090) {
-  //    $("#vehicle" + vehicleId + "-steering").text(Math.floor(d['opendlv_proxy_GroundSteeringRequest']['groundSteering']));
+      const steering = Math.floor(d['opendlv_proxy_GroundSteeringRequest']['groundSteering'] * 100);
+      $("#vehicle" + vehicleId + "-steering").text(steering);
     } else if (d.dataType == 1039) {
       var fieldId;
       if (originalSenderStamp == 0) {
@@ -237,8 +239,8 @@ var vehicleList = (function() {
 
           m_memory[vehicleId] = memory;
 
-          $("#vehicle" + vehicleId + "-motor").text(Math.floor(actuation.motor));
-          $("#vehicle" + vehicleId + "-steering").text(Math.floor(actuation.steering));
+         // $("#vehicle" + vehicleId + "-motor").text(Math.floor(actuation.motor));
+         // $("#vehicle" + vehicleId + "-steering").text(Math.floor(actuation.steering));
 
           controlMotor(vehicleId, actuation.motor / 100);
           controlSteering(vehicleId, actuation.steering / 100);
