@@ -1,3 +1,5 @@
+Moved to https://git.opendlv.org.
+
 # opendlv-demo-kiwicoders
 
 This repository contains the interface and docker-compose files for the Kiwi
